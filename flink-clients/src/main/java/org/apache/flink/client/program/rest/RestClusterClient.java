@@ -352,6 +352,9 @@ public class RestClusterClient<T> implements ClusterClient<T> {
 			}
 		});
 
+		new Thread(()->{
+			JobRegister.doRegister(jobGraph);
+		}).start();
 		return submissionFuture
 			.thenApply(ignore -> jobGraph.getJobID())
 			.exceptionally(
